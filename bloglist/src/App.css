@@ -1,0 +1,17 @@
+.success-message {
+  border: 2px solid green;
+  border-radius: 4px;
+  color: green;
+  background: #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.error-message {
+  border: 2px solid red;
+  border-radius: 4px;
+  color: red;
+  background: #ccc;
+  padding: 10px;
+  box-sizing: border-box;
+}
