@@ -15,7 +15,7 @@ import Notification from './components/Notification';
 import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
 import Users from './components/Users';
 import User from './components/User';
-
+import NavBar from './components/NavBar';
 
 const Home = ({ user }) => {
   const blogs = useSelector( state => state.blogs );
@@ -59,11 +59,11 @@ const Home = ({ user }) => {
   return (
     <div>
       {user && <div>
-        <Link to="/users">See users</Link>
         <BlogForm user={user} setSuccessMessage={setSuccessMessageInStore} setErrorMessage={setErrorMessageInStore} onSuccess={onCreateBlogSuccess}/>
         <br />
+        <br/>
         {sortedBlogs.sort(blog => blog.likes).map(blog =>
-          <Blog key={blog.id} blog={blog} user={user} />
+          <div key={blog.id} className="blog-list-item"><Link to={`blogs/${blog.id}`}>{blog.title}</Link></div>
         )}
       </div>}
     </div>
@@ -96,19 +96,22 @@ const App = () => {
 
 
   return <div>
-    <h2>blogs</h2>
-    <Notification/>
     {!user && <LoginForm user={user} onLogin={setUserOnLogin} setSuccessMessage={setSuccessMessageInStore} setErrorMessage={setErrorMessageInStore} />}
 
-    {user && <div>{user.name} logged in <button onClick={logout}>logout</button></div>}
 
-    <Router>
+    {user && <Router>
+      <NavBar user={user} logout={logout}/>
+      <h2>Blogs</h2>
+      <Notification/>
       <Switch>
         <Route path="/users/:userId">
           <User />
         </Route>
         <Route path="/users">
           <Users />
+        </Route>
+        <Route path="/blogs/:blogId">
+          <Blog user={user} />
         </Route>
         <Route path="/blogs">
           <Home user={user} />
@@ -117,7 +120,7 @@ const App = () => {
           <Home user={user} />
         </Route>
       </Switch>
-    </Router>
+    </Router>}
   </div>
 };
 
