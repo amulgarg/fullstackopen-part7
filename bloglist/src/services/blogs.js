@@ -33,6 +33,18 @@ const update = async (blogId, payload, callback) => {
 
 };
 
+const createComment = async (blogId, payload, callback) => {
+
+  try {
+    const response = await axios.post(`${baseUrl}/${blogId}/comments`, payload);
+    if(callback) callback();
+    return response.data;
+  } catch (error) {
+    throw error.response.data.error;
+  }
+
+};
+
 const remove = async (blogId, user, callback) => {
 
   const config = {
@@ -51,4 +63,4 @@ const remove = async (blogId, user, callback) => {
 
 };
 
-export default { getAll, create, update, remove }
+export default { getAll, create, update, remove, createComment }

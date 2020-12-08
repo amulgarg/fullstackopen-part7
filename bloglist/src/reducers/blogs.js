@@ -16,6 +16,15 @@ const blogsReducer = (state = initialState, action) => {
             return updatedBlog;
           return blog;
         });
+    case 'UPDATE_BLOG_COMMENTS':
+       // eslint-disable-next-line no-case-declarations
+       const blogWithNewComment = state.find( blog => blog.id === action.blogId );
+       blogWithNewComment.comments = action.comments;
+       return state.map( blog => {
+         if(blog.id === action.blogId)
+           return blogWithNewComment;
+         return blog;
+       });
     default:
       return state;
   }
@@ -39,6 +48,14 @@ export const updateBlogLikes = (blogId) => {
   return {
     type: 'UPDATE_BLOG_LIKES',
     blogId
+  }
+}
+
+export const updateBlogComments = (blogId, comments) => {
+  return {
+    type: 'UPDATE_BLOG_COMMENTS',
+    blogId,
+    comments
   }
 }
 

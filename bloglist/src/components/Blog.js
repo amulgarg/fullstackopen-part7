@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 import blogService from '../services/blogs';
-import { updateBlogLikes } from '../reducers/blogs';
+import { updateBlogComments, updateBlogLikes } from '../reducers/blogs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
@@ -41,6 +41,17 @@ const Blog = ({ likeHandler }) => {
     }
   } */
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const payload = { ...blog, comments: blog.comments.concat({ text: event.target.comment.value }) , user: blog.user.id };
+
+    const callback = () => {
+      dispatch(updateBlogComments(blog.id, blog.comments.concat({ text: event.target.comment.value })));
+    };
+
+    blogService.createComment(blog.id, payload, callback);
+  }
+
   console.log('rendering Blog');
 
   return <div style={blogStyle} id={blog.url} data-blogid={blog.id} className="blog">
@@ -49,7 +60,13 @@ const Blog = ({ likeHandler }) => {
       <div className="url"><a href={blog.url}>{blog.url}</a></div>
       <p className="likes">Likes: {blog.likes} <button onClick={handleLike} className="like">like</button></p>
       <p>Added by: {blog.author}</p>
-      {/*  <button onClick={handleRemove} className="remove">Remove</button> */}
+      <h2>Comments</h2>
+      <form onSubmit={handleSubmit}>
+        <input type="text" name="comment"/> <button type="submit" id="submit-blog-form">Add comment</button>
+      </form>
+      {blog.comments && blog.comments.length > 0 ? <div>
+        <ul>{blog.comments.map( (comment, index) => <li key={index}>{comment.text}</li>)}</ul>
+      </div> : null}
     </div>
   </div>
 };
