@@ -22,3 +22,11 @@
   margin: 3px;
   box-sizing: border-box;
 }
+
+.form-label {
+  margin-top: 10px;
+}
+
+#submit-blog-form{
+  margin-top: 10px
+}

@@ -55,7 +55,7 @@ const Blog = ({ likeHandler }) => {
   console.log('rendering Blog');
 
   return <div style={blogStyle} id={blog.url} data-blogid={blog.id} className="blog">
-    <h1 className="heading">{blog.title} {blog.author}</h1>
+    <h1 className="heading">{blog.title}</h1>
     <div>
       <div className="url"><a href={blog.url}>{blog.url}</a></div>
       <p className="likes">Likes: {blog.likes} <button onClick={handleLike} className="like">like</button></p>

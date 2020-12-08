@@ -13,6 +13,8 @@ import Blog from './components/Blog'
 import Notification from './components/Notification';
 
 import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom';
+import { Table } from 'react-bootstrap'
+
 import Users from './components/Users';
 import User from './components/User';
 import NavBar from './components/NavBar';
@@ -60,11 +62,14 @@ const Home = ({ user }) => {
     <div>
       {user && <div>
         <BlogForm user={user} setSuccessMessage={setSuccessMessageInStore} setErrorMessage={setErrorMessageInStore} onSuccess={onCreateBlogSuccess}/>
-        <br />
         <br/>
-        {sortedBlogs.sort(blog => blog.likes).map(blog =>
-          <div key={blog.id} className="blog-list-item"><Link to={`blogs/${blog.id}`}>{blog.title}</Link></div>
-        )}
+        <Table striped>
+          <tbody>
+            {sortedBlogs.sort(blog => blog.likes).map(blog =>
+              <tr key={blog.id}><td><Link to={`blogs/${blog.id}`}>{blog.title}</Link></td></tr>
+            )}
+          </tbody>
+        </Table>
       </div>}
     </div>
   )
@@ -95,13 +100,13 @@ const App = () => {
   }
 
 
-  return <div>
+  return <div className="container" style={{ position: 'relative' }}>
     {!user && <LoginForm user={user} onLogin={setUserOnLogin} setSuccessMessage={setSuccessMessageInStore} setErrorMessage={setErrorMessageInStore} />}
 
 
     {user && <Router>
       <NavBar user={user} logout={logout}/>
-      <h2>Blogs</h2>
+      <h1 style={{ marginTop: '10px' }}>Blogs</h1>
       <Notification/>
       <Switch>
         <Route path="/users/:userId">

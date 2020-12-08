@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import loginService from '../services/login';
+import { Button, Form } from 'react-bootstrap';
 
 const LoginForm = ({ onLogin, setSuccessMessage, setErrorMessage }) => {
   const [username, setUsername] = useState('');
@@ -27,19 +28,15 @@ const LoginForm = ({ onLogin, setSuccessMessage, setErrorMessage }) => {
     }
   }
 
-  return <div>
+  return <div style={{ marginTop: '10px' }}>
     <h2>Login to the application</h2>
-    <form onSubmit={loginUser} id="login-form">
-      <div>
-		name: <input value={username} onChange={handleUsernameChange} id="username"/>
-      </div>
-      <div>
-		password: <input type="password" value={password} onChange={handlePasswordChange} id="password"/>
-      </div>
-      <div>
-        <button type="submit" id="login-submit">Login</button>
-      </div>
-    </form>
+    <Form onSubmit={loginUser} id="login-form">
+      <Form.Label>Name:</Form.Label>
+      <Form.Control type="text" value={username} onChange={handleUsernameChange} id="username"/>
+      <Form.Label>Password:</Form.Label>
+      <Form.Control type="password" value={password} onChange={handlePasswordChange} id="password"/>
+      <Button type="submit" id="login-submit">Login</Button>
+    </Form>
   </div>
 }
 

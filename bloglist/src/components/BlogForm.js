@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import blogService from '../services/blogs';
+import { Button, Form } from 'react-bootstrap';
 
 const BlogForm = ({ user, setSuccessMessage, setErrorMessage, onSubmitHandler, onSuccess }) => {
   const [title, setTitle] = useState('');
@@ -41,17 +42,26 @@ const BlogForm = ({ user, setSuccessMessage, setErrorMessage, onSubmitHandler, o
   }
 
   if(!visible){
-    return <button onClick={handleCreateNote} className="create">Create new blog</button>
+    return <Button variant="primary" onClick={handleCreateNote} style={{
+      position: 'absolute',
+      top: '70px',
+      right: '20px'
+    }}>Create new blog</Button>
   }
 
   return <div>
     <h3>Create New</h3>
-    <form onSubmit={handleSubmit}>
-      <div>title: <input type="text" value={title} onChange={onTitleChange} id="title"/></div>
-      <div>author: <input type="text" value={author} onChange={onAuthorChange} id="author"/></div>
-      <div>url: <input type="text" value={url} onChange={onUrlChange} id="url"/></div>
-      <button type="submit" id="submit-blog-form">Create</button>
-    </form>
+    <Form onSubmit={handleSubmit}>
+      <Form.Group>
+        <Form.Label>Title:</Form.Label>
+        <Form.Control type="text" value={title} onChange={onTitleChange} id="title"/>
+        <Form.Label>Author:</Form.Label>
+        <Form.Control type="text" value={author} onChange={onAuthorChange} id="author"/>
+        <Form.Label>URL:</Form.Label>
+        <Form.Control type="text" value={url} onChange={onUrlChange} id="url"/>
+        <Button variant='primary' type="submit" id="submit-blog-form">Create</Button>
+      </Form.Group>
+    </Form>
   </div>
 };
 
